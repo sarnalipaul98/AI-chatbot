@@ -64,3 +64,20 @@ These improvements can make the application more useful and provide a better use
 ## 7. Conclusion
 Developing this AI Chatbot was a valuable learning experience. It helped me understand how frontend, backend, databases, and AI services work together in a web application.
 Through this project, I gained practical experience in web development, API integration, authentication, database management, and deployment. Overall, it improved my technical skills and gave me confidence in building real-world applications.
+
+## 8. Project Links
+
+**GitHub Repository:**  
+https://github.com/sarnalipaul98/AI-chatbot
+
+**Frontend Source Code:**  
+https://github.com/sarnalipaul98/AI-chatbot/tree/main/client
+
+**Backend Source Code:**  
+https://github.com/sarnalipaul98/AI-chatbot/tree/main/backend
+
+**Live Application (Frontend):**  
+https://ai-chatbot-pearl-six.vercel.app/
+
+**Backend Deployment:**  
+https://ai-chatbot-backend-asjq.onrender.com/
