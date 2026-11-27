@@ -35,6 +35,7 @@ export default function Home() {
 >("casual");
   // Profile and settings
 const [profileOpen, setProfileOpen] = useState(false);
+const [mobileHistoryOpen, setMobileHistoryOpen] = useState(false);
 const [activePanel, setActivePanel] = useState("");
 const [userName, setUserName] = useState("");
 const [userEmail, setUserEmail] = useState("");
@@ -776,7 +777,83 @@ socketRef.current?.emit(
 
         </div>
       </aside>
+    
+      {/* Mobile Chat History Drawer */}
+      {mobileHistoryOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <button
+            type="button"
+            aria-label="Close chat history"
+            onClick={() => setMobileHistoryOpen(false)}
+            className="absolute inset-0 h-full w-full bg-black/50"
+          />
 
+          <aside className={`absolute left-0 top-0 flex h-full w-72 max-w-[85vw] flex-col p-5 text-white shadow-xl ${
+            theme === "dark" ? "bg-black" : "bg-gray-900"
+          }`}>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-xl font-bold">Chat History</h2>
+
+              <button
+                type="button"
+                onClick={() => setMobileHistoryOpen(false)}
+                className="rounded-lg px-3 py-2 hover:bg-gray-700"
+              >
+                ✕
+              </button>
+            </div>
+
+            <button
+              onClick={() => {
+                setMobileHistoryOpen(false);
+                createNewConversation();
+              }}
+              disabled={creatingConversation}
+              className="rounded-lg bg-gray-700 px-4 py-3 text-left hover:bg-gray-600"
+            >
+              + New Chat
+            </button>
+
+            <div className="mt-6 flex flex-col gap-2 overflow-y-auto">
+              {conversations.length === 0 && (
+                <p className="text-sm text-gray-400">
+                  No conversations yet.
+                </p>
+              )}
+
+              {conversations.map((conversation) => (
+                <div
+                  key={conversation._id}
+                  className="flex items-center gap-1"
+                >
+                  <button
+                    onClick={() => {
+                      setMobileHistoryOpen(false);
+                      openConversation(conversation._id);
+                    }}
+                    className={`min-w-0 flex-1 truncate rounded-lg px-3 py-3 text-left text-sm hover:bg-gray-700 ${
+                      conversationId === conversation._id ? "bg-gray-700" : ""
+                    }`}
+                  >
+                    {conversation.title}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => deleteConversation(conversation._id)}
+                    aria-label={`Delete ${conversation.title}`}
+                    className="rounded-lg px-2 py-2 text-gray-400 hover:bg-red-600 hover:text-white"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              ))}
+            </div>
+          </aside>
+        </div>
+      )}
+
+    
       {/* Chat area */}
       <section className="flex min-h-screen flex-1 flex-col">
 
@@ -789,14 +866,25 @@ socketRef.current?.emit(
     : "bg-white text-gray-900"
 }`}>
 
-  <div>
-    <h2 className="text-xl font-semibold">
-  {chatbotName}
-</h2>
+    <div className="flex items-center gap-3">
+    <button
+      type="button"
+      onClick={() => setMobileHistoryOpen(true)}
+      className="md:hidden rounded-lg border px-3 py-2 text-xl"
+      aria-label="Open chat history"
+    >
+      ☰
+    </button>
 
-    <p className="text-sm text-gray-500">
-      Powered by Groq AI
-    </p>
+    <div>
+      <h2 className="text-xl font-semibold">
+        {chatbotName}
+      </h2>
+
+      <p className="text-sm text-gray-500">
+        Powered by Groq AI
+      </p>
+    </div>
   </div>
 
   <div className="relative flex items-center gap-3">
